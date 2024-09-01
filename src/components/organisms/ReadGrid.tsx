@@ -95,6 +95,7 @@ const ReadGrid = () => {
             key={i}
             src={read.cover}
             alt={read.title}
+            title={read.title}
           />
         </Link>
       ))}
