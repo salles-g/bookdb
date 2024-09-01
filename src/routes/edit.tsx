@@ -81,6 +81,16 @@ export default function EditRead() {
         />
       </p>
       <p>
+        <span>Publisher</span>
+        <input
+          placeholder="YYYY"
+          aria-label="Publisher"
+          type="text"
+          name="publisher"
+          defaultValue={read?.publisher}
+        />
+      </p>
+      <p>
         <span>Publish Year</span>
         <input
           placeholder="YYYY"

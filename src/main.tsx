@@ -30,7 +30,7 @@ const router = createBrowserRouter(
       action={rootAction}
     >
       <Route errorElement={<ErrorPage />}>
-        <Route index element={<Index />} />
+        <Route index element={<Index />} loader={rootLoader} />
         <Route
           path="reads/:readId"
           element={<Read />}

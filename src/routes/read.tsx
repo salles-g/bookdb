@@ -28,12 +28,17 @@ export default function Read() {
   const { read } = useLoaderData() as { read: TRead };
 
   return (
-    <div id="read">
+    <div id="read" className="gap-8">
       <div>
-        <img
-          key={read.cover}
-          src={read.cover || `https://robohash.org/${read.id}.png?size=200x200`}
-        />
+        <div className="block w-52 h-auto aspect-book rounded-lg shadow-lg">
+          <img
+            className="h-full w-full"
+            key={read.cover}
+            src={
+              read.cover || `https://robohash.org/${read.id}.png?size=200x200`
+            }
+          />
+        </div>
       </div>
 
       <div>
