@@ -7,7 +7,8 @@ html {
   box-sizing: inherit;
 }
 
-body {
+body,
+pre {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -262,11 +263,13 @@ i {
   line-height: 1.2;
 }
 
-#read h1 + p {
+#read h1 + p,
+#read h1 + pre {
   margin: 0;
 }
 
-#read h1 + p + p {
+#read h1 + p + p,
+#read h1 + pre {
   white-space: break-spaces;
 }
 
@@ -306,22 +309,22 @@ i {
   flex-direction: column;
   gap: 1rem;
 }
-#read-form > p:first-child {
+#read-form > p:nth-child(-n + 7) {
   margin: 0;
   padding: 0;
 }
-#read-form > p:first-child > :nth-child(2) {
+#read-form > p:nth-child(-n + 7) > :nth-child(2) {
   margin-right: 1rem;
 }
-#read-form > p:first-child,
+#read-form > p:nth-child(-n + 7),
 #read-form label {
   display: flex;
 }
-#read-form p:first-child span,
+#read-form p:nth-child(-n + 7) span,
 #read-form label span {
   width: 8rem;
 }
-#read-form p:first-child input,
+#read-form p:nth-child(-n + 7) input,
 #read-form label input,
 #read-form label textarea {
   flex-grow: 2;
