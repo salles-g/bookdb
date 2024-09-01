@@ -90,7 +90,12 @@ const ReadGrid = () => {
           className="block w-40 aspect-book rounded-lg shadow-lg hover:brightness-105 hover:scale-105 transition-all duration-150"
           draggable="true"
         >
-          <img className="h-full" key={i} src={read.cover} alt={read.title} />
+          <img
+            className="h-full w-full"
+            key={i}
+            src={read.cover}
+            alt={read.title}
+          />
         </Link>
       ))}
     </div>
