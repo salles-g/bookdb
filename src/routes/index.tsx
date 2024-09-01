@@ -1,7 +1,8 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { useReads } from "../context/ReadsProvider";
+import { Link } from "react-router-dom";
 
 export default function Index() {
-  const { reads } = useLoaderData() as { reads: TRead[] };
+  const { reads } = useReads();
   return (
     <p id="zero-state">
       <h4 className="text-3xl font-bold mb-8 font-sans">Minhas leituras:</h4>
