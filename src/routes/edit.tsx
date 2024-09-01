@@ -83,7 +83,7 @@ export default function EditRead() {
       <p>
         <span>Publisher</span>
         <input
-          placeholder="YYYY"
+          placeholder="Publisher"
           aria-label="Publisher"
           type="text"
           name="publisher"

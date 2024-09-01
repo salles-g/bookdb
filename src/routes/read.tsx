@@ -47,7 +47,9 @@ export default function Read() {
           <Favorite read={read} />
         </h1>
 
-        {read.description && <p>{read.description}</p>}
+        {read?.authors ? <p className="mt-1">{read.authors}</p> : null}
+
+        {read.description && <p className="mt-4">{read.description}</p>}
 
         <div>
           <Form action="edit">

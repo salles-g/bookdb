@@ -5,7 +5,7 @@ type TRead = {
   cover?: string;
   series?: string;
   edition?: number;
-  authors?: string[];
+  authors?: string;
   description?: string;
   favorite?: boolean;
   createdAt?: number;

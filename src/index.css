@@ -267,11 +267,6 @@ i {
   line-height: 1.2;
 }
 
-#read h1 + p,
-#read h1 + pre {
-  margin: 0;
-}
-
 #read h1 + p + p,
 #read h1 + pre {
   white-space: break-spaces;
