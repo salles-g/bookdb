@@ -16,49 +16,75 @@ const ReadGrid = () => {
           to={`reads/${read.id}`}
           onDragEnd={(e) => {
             const rects = reads.map(getReadRect);
-            let nextX, nextY, prevRead, nextRead;
-            let prevX = rects[0].left;
-            let prevY = rects[0].top;
+            let prevRead, nextRead;
 
-            for (const rect of rects) {
-              if (rect.left < e.clientX && rect.left > prevX) {
-                prevX = rect.left;
+            for (let j = 0; j < rects.length; j++) {
+              const rect = rects[j];
+              if (
+                e.clientX > rect.left &&
+                e.clientX < rect.right &&
+                e.clientY > rect.top &&
+                e.clientY < rect.bottom
+              ) {
+                prevRead = reads[j];
               }
-              if (rect.left > e.clientX && rect.left < nextX) {
-                nextX = rect.left;
-              }
-              if (rect.top < e.clientY && rect.top > prevY) {
-                prevY = rect.top;
-              }
-              if (rect.top > e.clientY && rect.top < nextY) {
-                nextY = rect.top;
+              if (
+                e.clientX < rect.left &&
+                (nextRead === null || rect.left < nextRead?.left)
+              ) {
+                nextRead = reads[j];
               }
             }
 
-            for (const read of reads) {
-              const rRect = getReadRect(read);
-              if (rRect.left === prevX && rRect.top === prevY) {
-                prevRead = read;
+            // If no suitable positions are found, exit early
+            if (!prevRead && !nextRead) {
+              const minY = Math.min(...rects.map((r) => r.top));
+              const maxY = Math.max(...rects.map((r) => r.bottom));
+              const firstElement = rects[0];
+              const lastElement = rects[rects.length - 1];
+
+              // Determine if the drag ended at the beginning or end of the list, and update it accordingly (splice+unshift or splice+push)
+              // Remember that e.clientX > maxX doesn't mean end of the list, since it might be just the end of a row,
+              // so we have to check if e.clientY > maxY to confirm it's the end of the list
+              const isBeginningOfList =
+                e.clientY <= minY || e.clientX < firstElement.left;
+
+              const isEndOfList =
+                e.clientY >= maxY ||
+                (e.clientX > lastElement.right &&
+                  e.clientY <= lastElement.bottom &&
+                  e.clientY >= lastElement.top);
+              if (isBeginningOfList) {
+                const newReads = [...reads];
+                newReads.splice(i, 1);
+                newReads.unshift(read);
+                updateList(newReads);
+              } else if (isEndOfList) {
+                const newReads = [...reads];
+                newReads.splice(i, 1);
+                newReads.push(read);
+                updateList(newReads);
               }
-              if (rRect.left === nextX && rRect.top === nextY) {
-                nextRead = read;
-              }
+
+              return;
             }
 
-            // Now, place the "read" after prevRead and before nextRead in a new list
             const newReads = [...reads];
-            newReads.splice(i, 1);
-            const prevIndex = newReads.findIndex((r) => r.id === prevRead?.id);
-            newReads.splice(prevIndex, 0, read);
-            const nextIndex = newReads.findIndex((r) => r.id === nextRead?.id);
-            newReads.splice(nextIndex, 0, read);
+            newReads.splice(i, 1); // Remove the dragged item
 
-            // Filter out duplicates and update the list
-            const orderedList = newReads.filter(
-              (item, index, self) =>
-                index === self.findIndex((t) => t.id === item.id)
-            );
-            updateList(orderedList);
+            if (nextRead) {
+              const nextIndex = newReads.findIndex((r) => r.id === nextRead.id);
+              newReads.splice(nextIndex, 0, read);
+            } else if (prevRead) {
+              const prevIndex = newReads.findIndex((r) => r.id === prevRead.id);
+              newReads.splice(prevIndex + 1, 0, read);
+            } else {
+              // If both are null, append at the end
+              newReads.push(read);
+            }
+
+            // Filter duplicates and update it
+            updateList(newReads);
           }}
           id={`read-${read.id}`}
           className="block w-40 aspect-book rounded-lg shadow-lg hover:brightness-105 hover:scale-105 transition-all duration-150"
