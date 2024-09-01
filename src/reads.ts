@@ -9,13 +9,18 @@ export async function getReads(query?: string): Promise<TRead[]> {
   if (query) {
     reads = matchSorter(reads, query, { keys: ["title"] });
   }
-  return reads.sort(sortBy("last", "createdAt"));
+  return reads.sort(sortBy("order", "createdAt"));
 }
 
 export async function createRead() {
   await fakeNetwork();
   const id = Math.random().toString(36).substring(2, 9);
-  const read = { id, createdAt: Date.now(), title: "" };
+  const read = {
+    id,
+    createdAt: Date.now(),
+    title: "",
+    order: ((await getReads()).length || 0) + 1,
+  };
   const reads = await getReads();
   reads.unshift(read);
   await set(reads);
@@ -37,6 +42,11 @@ export async function updateRead(id: string, updates: Partial<TRead>) {
   Object.assign(read, updates);
   await set(reads);
   return read;
+}
+
+export async function updateReadList(newList: TRead[]) {
+  await fakeNetwork();
+  await set(newList);
 }
 
 export async function deleteRead(id: string) {
