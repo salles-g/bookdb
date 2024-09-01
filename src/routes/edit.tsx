@@ -80,15 +80,14 @@ export default function EditRead() {
           defaultValue={read?.isbn}
         />
       </p>
-      {/* date of publish */}
       <p>
-        <span>Publish Date</span>
+        <span>Publish Year</span>
         <input
-          placeholder="YYYY-MM-DD"
-          aria-label="Publish Date"
+          placeholder="YYYY"
+          aria-label="Publish Year"
           type="text"
-          name="publishDate"
-          defaultValue={read?.publishDate}
+          name="publishYear"
+          defaultValue={read?.publishYear}
         />
       </p>
       <label>

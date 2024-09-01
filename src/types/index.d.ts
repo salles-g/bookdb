@@ -10,5 +10,6 @@ type TRead = {
   favorite?: boolean;
   createdAt?: number;
   pages?: number;
-  publishDate?: string;
+  publishYear?: string;
+  publisher?: string;
 };
