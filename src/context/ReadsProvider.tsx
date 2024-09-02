@@ -9,12 +9,15 @@ export const useReads = () => {
 interface ReadsProviderValue {
   q: string;
   reads: TRead[];
+  previews: TRead[] | null;
+  setPreviews: React.Dispatch<React.SetStateAction<TRead[] | null>>;
   updateList: (newList: TRead[]) => void;
 }
 const ReadsContext = createContext<ReadsProviderValue | null>(null);
 const ReadsProvider = ({ children }) => {
   const { reads: list, q } = useLoaderData() as { reads: TRead[]; q: string };
   const [reads, setReads] = useState<TRead[]>(list);
+  const [previews, setPreviews] = useState<TRead[] | null>(null);
 
   const updateList = (newList: TRead[]) => {
     const orderedList = newList.map((item, index) => ({
@@ -30,7 +33,15 @@ const ReadsProvider = ({ children }) => {
   }, [list]);
 
   return (
-    <ReadsContext.Provider value={{ reads, q, updateList }}>
+    <ReadsContext.Provider
+      value={{
+        q,
+        reads,
+        updateList,
+        previews,
+        setPreviews,
+      }}
+    >
       {children}
     </ReadsContext.Provider>
   );
