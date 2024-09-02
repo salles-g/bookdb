@@ -20,15 +20,18 @@ import EditRead, { action as editAction } from "./routes/edit";
 import { action as destroyAction } from "./routes/destroy";
 import Index from "./routes/index";
 import ReadsProvider from "./context/ReadsProvider";
+import ConnectionProvider from "./context/ConnectionProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
     <Route
       path="/"
       element={
-        <ReadsProvider>
-          <Root />
-        </ReadsProvider>
+        <ConnectionProvider>
+          <ReadsProvider>
+            <Root />
+          </ReadsProvider>
+        </ConnectionProvider>
       }
       errorElement={<ErrorPage />}
       loader={rootLoader}
