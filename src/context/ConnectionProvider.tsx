@@ -11,8 +11,7 @@ const ConnectionProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState<boolean>(true);
   useEffect(() => {
     const handleConnectionChange = () => {
-      const condition = navigator.onLine ? "online" : "offline";
-      setIsConnected(condition === "online");
+      setIsConnected(navigator.onLine);
     };
 
     window.addEventListener("online", handleConnectionChange);
