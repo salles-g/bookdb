@@ -15,30 +15,25 @@ const SearchForm = () => {
   }, [q]);
 
   return (
-    <div>
-      <Form id="search-form" role="search">
-        <input
-          id="q"
-          className={searching ? "loading" : ""}
-          aria-label="Buscar leituras"
-          placeholder="Buscar"
-          type="search"
-          name="q"
-          defaultValue={q}
-          onChange={(event) => {
-            const isFirstSearch = q == null;
-            submit(event.currentTarget.form!, {
-              replace: !isFirstSearch,
-            });
-          }}
-        />
-        <div id="search-spinner" aria-hidden hidden={!searching} />
-        <div className="sr-only" aria-live="polite"></div>
-      </Form>
-      <Form method="post">
-        <button type="submit">New</button>
-      </Form>
-    </div>
+    <Form id="search-form" role="search">
+      <input
+        id="q"
+        className={searching ? "loading" : ""}
+        aria-label="Buscar leituras"
+        placeholder="Buscar"
+        type="search"
+        name="q"
+        defaultValue={q}
+        onChange={(event) => {
+          const isFirstSearch = q == null;
+          submit(event.currentTarget.form!, {
+            replace: !isFirstSearch,
+          });
+        }}
+      />
+      <div id="search-spinner" aria-hidden hidden={!searching} />
+      <div className="sr-only" aria-live="polite"></div>
+    </Form>
   );
 };
 
