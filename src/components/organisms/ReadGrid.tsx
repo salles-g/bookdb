@@ -6,14 +6,10 @@ const getReadRect = (read: TRead) =>
   $(`#read-${read.id}`).getBoundingClientRect();
 
 const ReadGrid = () => {
-  const { reads, updateList, previews, setPreviews } = useReads();
+  const { reads, updateList, updateCount, previews, setPreviews } = useReads();
 
   return (
-    <div
-      key={reads.map((r) => r.id).join(",")}
-      id="read-grid"
-      className="flex flex-wrap box-border"
-    >
+    <div key={updateCount} id="read-grid" className="flex flex-wrap box-border">
       {reads?.map((read, i) => (
         <Link
           key={i}
@@ -35,14 +31,16 @@ const ReadGrid = () => {
             );
 
             if (hoverIndex !== -1) {
-              const isBefore =
-                e.clientX <
-                rects[hoverIndex].left + rects[hoverIndex].width / 2;
-              const hoveredElement = $(`#read-${reads[hoverIndex].id}`);
-              const draggedElement = $(`#read-${read.id}`);
-              const previewElement = draggedElement.cloneNode(true);
-              hoveredElement[isBefore ? "before" : "after"](previewElement);
-              draggedElement.remove();
+              const hoveredEl = $(`#read-${reads[hoverIndex].id}`);
+              const draggedEl = $(`#read-${read.id}`);
+              const previewElement = draggedEl.cloneNode(true);
+              if (hoveredEl.id !== draggedEl.id) {
+                const isBefore =
+                  e.clientX <
+                  rects[hoverIndex].left + rects[hoverIndex].width / 2;
+                hoveredEl[isBefore ? "before" : "after"](previewElement);
+                draggedEl.remove();
+              }
 
               const newPreviews = [...$(`#read-grid`).children].map((c) => {
                 return reads.find((r) => r.id === c.id.replace("read-", ""));
@@ -50,7 +48,7 @@ const ReadGrid = () => {
               setPreviews(newPreviews);
             }
           }}
-          className="block hover:brightness-105 hover:scale-105 transition-all duration-150 p-4"
+          className="block hover:scale-105 transition-all duration-150 p-4"
           draggable="true"
         >
           <img

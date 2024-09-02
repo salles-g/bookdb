@@ -12,11 +12,13 @@ interface ReadsProviderValue {
   previews: TRead[] | null;
   setPreviews: React.Dispatch<React.SetStateAction<TRead[] | null>>;
   updateList: (newList: TRead[]) => void;
+  updateCount: number;
 }
 const ReadsContext = createContext<ReadsProviderValue | null>(null);
 const ReadsProvider = ({ children }) => {
   const { reads: list, q } = useLoaderData() as { reads: TRead[]; q: string };
   const [reads, setReads] = useState<TRead[]>(list);
+  const [updateCount, setUpdateCount] = useState<number>(0);
   const [previews, setPreviews] = useState<TRead[] | null>(null);
 
   const updateList = (newList: TRead[]) => {
@@ -26,6 +28,7 @@ const ReadsProvider = ({ children }) => {
     }));
     setReads(orderedList);
     updateReadList(orderedList);
+    setUpdateCount((c) => c + 1);
   };
 
   useEffect(() => {
@@ -39,6 +42,7 @@ const ReadsProvider = ({ children }) => {
         reads,
         updateList,
         previews,
+        updateCount,
         setPreviews,
       }}
     >
