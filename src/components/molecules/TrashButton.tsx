@@ -13,10 +13,8 @@ const TrashButton = ({ list }: Props) => {
     <>
       <button
         className={clsx("appearance-none p-2", {
-          "cursor-pointer": selectedReads.length > 0,
-          "cursor-not-allowed opacity-50": selectedReads.length === 0,
-          "fill-gray-500": selectedReads.length === 0,
-          "fill-red-500": selectedReads.length > 0,
+          "cursor-pointer fill-red-500": !!selectedReads.length,
+          "cursor-not-allowed opacity-50 fill-gray-500": !selectedReads.length,
         })}
         disabled={selectedReads.length === 0}
         onClick={toggleDeletePrompt}
