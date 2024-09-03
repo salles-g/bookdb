@@ -18,12 +18,16 @@ type EditListProviderValue = {
   title: string;
   onChangeTitle: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmitTitle: (event: React.FormEvent, list: TList) => void;
+
+  isDeleting: boolean;
+  toggleDeletePrompt: () => void;
 } & ReturnType<typeof useReads>;
 const EditListContext = createContext<EditListProviderValue | null>(null);
 const EditListProvider = ({ children }) => {
   const readsContextValue = useReads();
   const [title, setTitle] = useState("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [selectedReads, setSelectedReads] = useState<TRead[]>([]);
 
   // Toggles editing mode
@@ -52,6 +56,10 @@ const EditListProvider = ({ children }) => {
     );
     readsContextValue.updateList(listId, updatedReads);
     setSelectedReads([]);
+    setIsDeleting(false);
+  };
+  const toggleDeletePrompt = () => {
+    setIsDeleting((prevIsDeleting) => !prevIsDeleting);
   };
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +91,9 @@ const EditListProvider = ({ children }) => {
         selectedReads,
         setSelectedReads,
         deleteSelectedReads,
+
+        isDeleting,
+        toggleDeletePrompt,
       }}
     >
       {children}
