@@ -23,7 +23,6 @@ import ReadsProvider from "./context/ReadsProvider";
 import ConnectionProvider from "./context/ConnectionProvider";
 import List from "./routes/list";
 import EditListProvider from "./context/EditListProvider";
-import EditList from "./routes/listEdit";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
@@ -42,12 +41,11 @@ const router = createBrowserRouter(
     >
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} loader={rootLoader} />
-        <Route path="lists/:listId" element={<List />} loader={rootLoader} />
         <Route
-          path="lists/:listId/edit"
+          path="lists/:listId"
           element={
             <EditListProvider>
-              <EditList />
+              <List />
             </EditListProvider>
           }
           loader={rootLoader}

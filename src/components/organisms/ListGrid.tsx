@@ -1,27 +1,27 @@
 import React from "react";
-import ReadGrid from "./ReadGrid";
-import { Pencil } from "../atoms/Icons";
-import { Link } from "react-router-dom";
+import EditGrid from "./EditGrid";
+import DoneButton from "../molecules/DoneButton";
+import EditButton from "../molecules/EditButton";
+import TrashButton from "../molecules/TrashButton";
+import EditableTitle from "../molecules/EditableTitle";
 
 interface Props {
   list: TList;
-  editable?: boolean;
 }
-const ListGrid = ({ list, editable }: Props) => {
+const ListGrid = ({ list }: Props) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-5">
-        <h1 className="text-3xl ml-4 font-bold font-sans">{list.title}</h1>
-        {editable && (
-          <Link
-            to={`/lists/${list.id}/edit`}
-            className="appearance-none p-0 m-0 outline-none border-none shadow-none hover:shadow-none"
-          >
-            <Pencil />
-          </Link>
-        )}
+      <div className="flex items-center justify-between cursor-default">
+        <div className="flex gap-2">
+          <EditableTitle list={list} />
+          <EditButton />
+        </div>
+        <div className="flex gap-2">
+          <DoneButton list={list} />
+          <TrashButton list={list} />
+        </div>
       </div>
-      <ReadGrid list={list} />
+      <EditGrid list={list} />
     </div>
   );
 };

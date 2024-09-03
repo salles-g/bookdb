@@ -1,47 +1,24 @@
+import React, { useMemo } from "react";
 import { useEditList } from "../../context/EditListProvider";
-import React, { useState } from "react";
-import { Form } from "react-router-dom";
 
 interface EditableTitleProps {
   list: TList;
 }
 const EditableTitle: React.FC<EditableTitleProps> = ({ list }) => {
-  const { editListTitle } = useEditList();
-  const [title, setTitle] = useState(list.title);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  const handleTitleClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleFormSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    editListTitle(list.id, title);
-    setIsEditing(false);
-  };
-
+  const { title, isEditing, onChangeTitle } = useEditList();
+  const shownTitle = useMemo(() => title || list?.title, [list, title]);
   return (
     <div className="ml-4">
       {isEditing ? (
-        <Form onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            value={title}
-            onChange={handleTitleChange}
-            autoFocus
-          />
-          <button className="ml-2 p-2" type="submit">
-            ✔️
-          </button>
-        </Form>
+        <input
+          type="text"
+          value={shownTitle}
+          onChange={onChangeTitle}
+          autoFocus
+          className="text-3xl font-bold font-sans border-none outline-none h-fit p-0 shadow-none hover:shadow-none"
+        />
       ) : (
-        <h1 className="text-3xl font-bold font-sans" onClick={handleTitleClick}>
-          {title}
-        </h1>
+        <h1 className="text-3xl font-bold font-sans">{shownTitle}</h1>
       )}
     </div>
   );

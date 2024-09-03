@@ -15,7 +15,7 @@ export async function createList(params?: Partial<TList>) {
   const list: TList = {
     id: params?.id || id,
     createdAt: Date.now(),
-    title: params?.title || "",
+    title: params?.title || "New List",
     order: ((await getLists()).length || 0) + 1,
     reads: params?.reads || [],
   };
@@ -51,6 +51,17 @@ export async function updateList(id: string, updates: Partial<TList>) {
   Object.assign(list, updates);
   await setLists(lists);
   return list;
+}
+
+export async function deleteList(id: string) {
+  const lists = await getLists();
+  const index = lists.findIndex((list) => list.id === id);
+  if (index > -1) {
+    lists.splice(index, 1);
+    await setLists(lists);
+    return true;
+  }
+  return false;
 }
 
 export async function getReads(query?: string): Promise<TRead[]> {

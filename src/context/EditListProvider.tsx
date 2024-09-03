@@ -10,14 +10,28 @@ type EditListProviderValue = {
   selectedReads: TRead[];
   setSelectedReads: React.Dispatch<React.SetStateAction<TRead[]>>;
   deleteSelectedReads: (id: string) => void;
+
+  isEditing: boolean;
+  toggleEdit: () => void;
   toggleSelect: (read: TRead) => void;
-  editListTitle: (id: string, title: string) => void;
+
+  title: string;
+  onChangeTitle: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmitTitle: (event: React.FormEvent, list: TList) => void;
 } & ReturnType<typeof useReads>;
 const EditListContext = createContext<EditListProviderValue | null>(null);
 const EditListProvider = ({ children }) => {
   const readsContextValue = useReads();
+  const [title, setTitle] = useState("");
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [selectedReads, setSelectedReads] = useState<TRead[]>([]);
 
+  // Toggles editing mode
+  const toggleEdit = () => {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  };
+
+  // Selects or deselects an item for deletion
   const toggleSelect = (read: TRead) => {
     setSelectedReads((prevSelectedReads) =>
       prevSelectedReads.includes(read)
@@ -25,6 +39,8 @@ const EditListProvider = ({ children }) => {
         : [...prevSelectedReads, read]
     );
   };
+
+  // Deletes selected reads from a list
   const deleteSelectedReads = (listId: string) => {
     if (!selectedReads.length) return;
     const reads = readsContextValue.lists.find(
@@ -37,6 +53,16 @@ const EditListProvider = ({ children }) => {
     readsContextValue.updateList(listId, updatedReads);
     setSelectedReads([]);
   };
+
+  const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+  const onSubmitTitle = (event: React.FormEvent, list: TList) => {
+    if (!title) return;
+    event.preventDefault();
+    editListTitle(list.id, title);
+  };
+  // Updates the title of a list in the DB
   const editListTitle = (id: string, title: string) => {
     updateList(id, { title });
   };
@@ -45,8 +71,15 @@ const EditListProvider = ({ children }) => {
     <EditListContext.Provider
       value={{
         ...readsContextValue,
+
+        isEditing,
+        toggleEdit,
         toggleSelect,
-        editListTitle,
+
+        title,
+        onChangeTitle,
+        onSubmitTitle,
+
         selectedReads,
         setSelectedReads,
         deleteSelectedReads,

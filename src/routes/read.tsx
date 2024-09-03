@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { getLists, getRead, updateRead } from "../reads";
+import Image from "../components/atoms/Image";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -32,7 +33,7 @@ export default function Read() {
     <div id="read" className="gap-8">
       <div>
         <div className="block w-52 h-auto aspect-book rounded-lg shadow-lg">
-          <img
+          <Image
             className="h-full w-full"
             key={read.cover}
             src={
