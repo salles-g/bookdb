@@ -34,7 +34,7 @@ export async function action({ request }) {
     }
     case "newList": {
       const list = await createList();
-      return redirect(`/lists/${list.id}/edit`);
+      return redirect(`/lists/${list.id}`);
     }
     default: {
       return null;
