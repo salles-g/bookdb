@@ -9,13 +9,15 @@ import { updateRead } from "../reads";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
+  const listIds = formData.getAll("lists") as string[];
   const updates = Object.fromEntries(formData);
-  await updateRead(params.readId!, updates);
+  delete updates.listIds;
+  await updateRead(params.readId!, updates, listIds);
   return redirect(`/reads/${params.readId}`);
 }
 
 export default function EditRead() {
-  const { read } = useLoaderData() as { read: TRead };
+  const { lists, read } = useLoaderData() as { read: TRead; lists: TList[] };
   const navigate = useNavigate();
 
   return (
@@ -118,6 +120,20 @@ export default function EditRead() {
           rows={6}
         />
       </label>
+      {/* Use checkboxes to determine which lists it belongs to */}
+      {lists?.map((list) => (
+        <label key={list.id} className="flex items-center">
+          <span>Lists</span>
+          <input
+            type="checkbox"
+            name="lists"
+            className="w-5 h-5 max-w-5 mr-2"
+            value={list.id}
+            defaultChecked={list.reads.some((r) => r.id === read.id)}
+          />
+          {list.title}
+        </label>
+      ))}
       <p>
         <button type="submit">Save</button>
         <button
