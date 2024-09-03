@@ -5,7 +5,7 @@ import {
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
-import { getRead, updateRead } from "../reads";
+import { getLists, getRead, updateRead } from "../reads";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -15,13 +15,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 export async function loader({ params }: LoaderFunctionArgs) {
   const read = await getRead(params.readId!);
+  const lists = await getLists();
   if (!read) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
     });
   }
-  return { read };
+  return { read, lists };
 }
 
 export default function Read() {
