@@ -1,0 +1,2 @@
+[ ] Não exibir novamente
+[ ] Guardar no Google Drive (ref.: Todoist)
