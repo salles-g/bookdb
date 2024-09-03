@@ -15,6 +15,7 @@
   },
   "engineStrict": true,
   "dependencies": {
+    "clsx": "^2.1.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "react": "npm:@preact/compat",

@@ -35,7 +35,7 @@ const ReadsProvider = ({ children }) => {
     setLists((prevLists) =>
       prevLists.map((list) => (list.id === listId ? { ...list, reads } : list))
     );
-    setUpdateCount(updateCount + 1);
+    setUpdateCount((count) => count + 1);
   };
 
   useEffect(() => {
