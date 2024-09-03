@@ -21,6 +21,7 @@ import { action as destroyAction } from "./routes/destroy";
 import Index from "./routes/index";
 import ReadsProvider from "./context/ReadsProvider";
 import ConnectionProvider from "./context/ConnectionProvider";
+import List from "./routes/list";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
     >
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} loader={rootLoader} />
+        <Route path="lists/:listId" element={<List />} loader={rootLoader} />
         <Route
           path="reads/:readId"
           element={<Read />}
