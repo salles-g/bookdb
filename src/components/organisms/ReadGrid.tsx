@@ -5,8 +5,12 @@ import { useReads } from "../../context/ReadsProvider";
 const getReadRect = (read: TRead) =>
   $(`#read-${read.id}`).getBoundingClientRect();
 
-const ReadGrid = () => {
-  const { reads, updateList, updateCount, previews, setPreviews } = useReads();
+interface Props {
+  list: TList;
+  reads: TRead[];
+}
+const ReadGrid = ({ list, reads }: Props) => {
+  const { updateList, updateCount, previews, setPreviews } = useReads();
 
   return (
     <div key={updateCount} id="read-grid" className="flex flex-wrap box-border">
@@ -17,7 +21,7 @@ const ReadGrid = () => {
           to={`reads/${read.id}`}
           onDragEnd={() => {
             if (previews?.length === reads?.length) {
-              return updateList(previews);
+              return updateList(list.id, previews);
             }
           }}
           onDrag={(e) => {
