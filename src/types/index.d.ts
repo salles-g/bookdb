@@ -14,3 +14,11 @@ type TRead = {
   publishYear?: string;
   publisher?: string;
 };
+
+type TList = {
+  id: string;
+  title: string;
+  reads: TRead[];
+  order: number;
+  createdAt: number;
+};
