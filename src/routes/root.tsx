@@ -6,15 +6,19 @@ import {
   Form,
   Link,
 } from "react-router-dom";
-import { getReads, createRead } from "../reads";
+import { createRead, getLists, getReads } from "../reads";
 import ReadList from "../components/organisms/ReadList";
 import SearchForm from "../components/molecules/SearchForm";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q")!;
-  const reads = await getReads(q);
-  return { reads, q };
+  const lists = await getLists();
+  let reads: TRead[] = [];
+  if (q) {
+    reads = await getReads(q);
+  }
+  return { lists, reads, q };
 }
 
 export async function action() {
