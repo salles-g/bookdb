@@ -23,7 +23,8 @@
     "react-draggable-list": "^4.2.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
