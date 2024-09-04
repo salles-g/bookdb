@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { updateRead } from "../reads";
+import Button from "../components/atoms/Button";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -135,15 +136,18 @@ export default function EditRead() {
         </label>
       ))}
       <p>
-        <button type="submit">Save</button>
-        <button
+        <Button layout="styled" type="submit">
+          Save
+        </Button>
+        <Button
+          layout="styled"
           type="button"
           onClick={() => {
             navigate(-1);
           }}
         >
           Cancel
-        </button>
+        </Button>
       </p>
     </Form>
   );

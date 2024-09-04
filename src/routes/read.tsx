@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { getLists, getRead, updateRead } from "../reads";
 import Image from "../components/atoms/Image";
+import Button from "../components/atoms/Button";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -55,7 +56,7 @@ export default function Read() {
 
         <div>
           <Form action="edit">
-            <button type="submit">Edit</button>
+            <Button type="submit">Edit</Button>
           </Form>
           <Form
             method="post"
@@ -66,7 +67,7 @@ export default function Read() {
               }
             }}
           >
-            <button type="submit">Delete</button>
+            <Button type="submit">Delete</Button>
           </Form>
         </div>
       </div>

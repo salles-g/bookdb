@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { repopulate } from "./repopulate";
+import Button from "../components/atoms/Button";
 
 export const Return = () => (
   <svg
@@ -43,12 +44,20 @@ const FooterDev = () => {
               Tem certeza que quer redefinir os itens?
             </h1>
             <div className="flex gap-4">
-              <button onClick={confirmRepopulate} className="text-green-600">
+              <Button
+                layout="styled"
+                onClick={confirmRepopulate}
+                className="text-green-600"
+              >
                 Sim
-              </button>
-              <button onClick={cancelRepopulate} className="text-red-600">
+              </Button>
+              <Button
+                layout="styled"
+                onClick={cancelRepopulate}
+                className="text-red-600"
+              >
                 Não
-              </button>
+              </Button>
             </div>
           </div>
         </ReactModal>
@@ -59,7 +68,7 @@ const FooterDev = () => {
         </small>
         <button
           onClick={promptRepopulate}
-          className="appearance-none p-0 m-0 bg-transparent shadow-none hover:shadow-none w-4 h-4 fill-gray-300"
+          className="default p-0 m-0 bg-transparent shadow-none hover:shadow-none w-4 h-4 fill-gray-300"
         >
           <Return />
         </button>

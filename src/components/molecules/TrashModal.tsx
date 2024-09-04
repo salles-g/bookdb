@@ -1,6 +1,7 @@
 import { useEditList } from "../../context/EditListProvider";
 import React from "react";
 import ReactModal from "react-modal";
+import Button from "../atoms/Button";
 
 interface Props {
   list: TList;
@@ -20,15 +21,20 @@ const TrashModal = ({ list }: Props) => {
           Tem certeza que quer deletar esses itens?
         </h1>
         <div className="flex gap-4">
-          <button
-            onClick={() => deleteSelectedReads(list.id)}
+          <Button
+            layout="styled"
             className="text-green-600"
+            onClick={() => deleteSelectedReads(list.id)}
           >
             Sim
-          </button>
-          <button onClick={toggleDeletePrompt} className="text-red-600">
+          </Button>
+          <Button
+            layout="styled"
+            className="text-red-600"
+            onClick={toggleDeletePrompt}
+          >
             Não
-          </button>
+          </Button>
         </div>
       </div>
     </ReactModal>

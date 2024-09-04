@@ -1,6 +1,7 @@
 import React from "react";
 import { Check } from "../atoms/Icons";
 import { useEditList } from "../../context/EditListProvider";
+import Button from "../atoms/Button";
 
 interface Props {
   list: TList;
@@ -8,16 +9,17 @@ interface Props {
 const DoneButton = ({ list }: Props) => {
   const { isEditing, toggleEdit, onSubmitTitle } = useEditList();
   return !isEditing ? null : (
-    <button
+    <Button
       type="submit"
-      className={"appearance-none p-2 w-10 h-10 fill-green-500"}
+      layout={"styled"}
+      className={"p-2 w-10 h-10 fill-green-500"}
       onClick={(e) => {
         toggleEdit();
         onSubmitTitle(e, list);
       }}
     >
       <Check />
-    </button>
+    </Button>
   );
 };
 

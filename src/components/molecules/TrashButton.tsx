@@ -3,6 +3,7 @@ import React from "react";
 import { Trash } from "../atoms/Icons";
 import { useEditList } from "../../context/EditListProvider";
 import TrashModal from "./TrashModal";
+import Button from "../atoms/Button";
 
 interface Props {
   list: TList;
@@ -11,8 +12,9 @@ const TrashButton = ({ list }: Props) => {
   const { isEditing, selectedReads, toggleDeletePrompt } = useEditList();
   return !isEditing ? null : (
     <>
-      <button
-        className={clsx("appearance-none p-2", {
+      <Button
+        layout="styled"
+        className={clsx("p-2", {
           "cursor-pointer fill-red-500": !!selectedReads.length,
           "cursor-not-allowed opacity-50 fill-gray-500": !selectedReads.length,
         })}
@@ -20,7 +22,7 @@ const TrashButton = ({ list }: Props) => {
         onClick={toggleDeletePrompt}
       >
         <Trash />
-      </button>
+      </Button>
       <TrashModal list={list} />
     </>
   );
