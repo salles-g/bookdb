@@ -11,36 +11,30 @@ const ReadList = () => {
 
   return (
     <nav className="select-none" ref={containerRef}>
-      {reads.length ? (
-        lists.map((list) => {
-          return (
-            <Dropdown
-              summary={<Link to={`/lists/${list.id}`}>{list.title}</Link>}
-            >
-              <DraggableList
-                itemKey="id"
-                // @ts-expect-error - 'template' is expected to be a class
-                template={ReadListItem}
-                list={list.reads.filter((read) =>
-                  reads.find((r) => r.id === read.id)
-                )}
-                onMoveEnd={(reads: TRead[]) => {
-                  updateList(list.id, { reads });
-                }}
-                container={() => containerRef.current}
-              />
-            </Dropdown>
-          );
-        })
-      ) : (
-        <div>
-          {lists.map((list) => (
-            <Link key={list.id} to={`/lists/${list.id}`}>
-              {list.title}
-            </Link>
-          ))}
-        </div>
-      )}
+      {lists.map((list) => {
+        return (
+          <Dropdown
+            summary={<Link to={`/lists/${list.id}`}>{list.title}</Link>}
+          >
+            <DraggableList
+              itemKey="id"
+              // @ts-expect-error - 'template' is expected to be a class
+              template={ReadListItem}
+              list={
+                reads?.length
+                  ? list.reads.filter((read) =>
+                      reads.find((r) => r.id === read.id)
+                    )
+                  : list.reads
+              }
+              onMoveEnd={(reads: TRead[]) => {
+                updateList(list.id, { reads });
+              }}
+              container={() => containerRef.current}
+            />
+          </Dropdown>
+        );
+      })}
     </nav>
   );
 };
