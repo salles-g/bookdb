@@ -21,7 +21,9 @@ const ReadList = () => {
                 itemKey="id"
                 // @ts-expect-error - 'template' is expected to be a class
                 template={ReadListItem}
-                list={list.reads}
+                list={list.reads.filter((read) =>
+                  reads.find((r) => r.id === read.id)
+                )}
                 onMoveEnd={(reads: TRead[]) => {
                   console.debug("Moved!", { list, reads });
                   updateList(list.id, { reads });
