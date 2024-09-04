@@ -25,7 +25,6 @@ const ReadList = () => {
                   reads.find((r) => r.id === read.id)
                 )}
                 onMoveEnd={(reads: TRead[]) => {
-                  console.debug("Moved!", { list, reads });
                   updateList(list.id, { reads });
                 }}
                 container={() => containerRef.current}
