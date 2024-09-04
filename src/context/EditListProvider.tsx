@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
 import { useReads } from "./ReadsProvider";
-import { updateList } from "../reads";
 
 export const useEditList = () => {
   return useContext(EditListContext)!;
@@ -54,7 +53,7 @@ const EditListProvider = ({ children }) => {
     const updatedReads = reads.filter(
       (read) => !selectedReads.find((r) => r.id === read.id)
     );
-    readsContextValue.updateList(listId, updatedReads);
+    readsContextValue.updateList(listId, { reads: updatedReads });
     setSelectedReads([]);
     setIsDeleting(false);
   };
@@ -62,6 +61,10 @@ const EditListProvider = ({ children }) => {
     setIsDeleting((prevIsDeleting) => !prevIsDeleting);
   };
 
+  // Updates the title of a list in the DB
+  const editListTitle = (id: string, title: string) => {
+    readsContextValue.updateList(id, { title });
+  };
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
@@ -69,10 +72,6 @@ const EditListProvider = ({ children }) => {
     if (!title) return;
     event.preventDefault();
     editListTitle(list.id, title);
-  };
-  // Updates the title of a list in the DB
-  const editListTitle = (id: string, title: string) => {
-    updateList(id, { title });
   };
 
   return (

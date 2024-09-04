@@ -17,7 +17,7 @@ export const useGridDnd = ({ list }: Props): UseGridDndReturn => {
 
   const onDragEnd = () => {
     if (previews?.length === reads?.length) {
-      return updateList(list.id, previews);
+      return updateList(list.id, { reads: previews });
     }
   };
 

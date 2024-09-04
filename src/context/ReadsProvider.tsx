@@ -18,7 +18,7 @@ interface ReadsProviderValue {
   lists: TList[];
   previews: TRead[] | null;
   setPreviews: React.Dispatch<React.SetStateAction<TRead[] | null>>;
-  updateList: (listId: string, reads: TRead[]) => void;
+  updateList: (listId: string, updates: Partial<TList>) => void;
   updateCount: number;
 }
 const ReadsContext = createContext<ReadsProviderValue | null>(null);
@@ -28,12 +28,14 @@ const ReadsProvider = ({ children }) => {
   const [updateCount, setUpdateCount] = useState<number>(0);
   const [previews, setPreviews] = useState<TRead[] | null>(null);
 
-  const updateList = (listId: string, reads: TRead[]) => {
+  const updateList = (listId: string, updates: Partial<TList>) => {
     updateReadList(listId, {
-      reads,
+      ...updates,
     });
     setLists((prevLists) =>
-      prevLists.map((list) => (list.id === listId ? { ...list, reads } : list))
+      prevLists.map((list) =>
+        list.id === listId ? { ...list, ...updates } : list
+      )
     );
     setUpdateCount((count) => count + 1);
   };
