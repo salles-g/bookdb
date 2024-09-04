@@ -6,6 +6,7 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
+import "./base.css";
 import "./index.css";
 import Root, {
   loader as rootLoader,
