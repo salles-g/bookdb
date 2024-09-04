@@ -1,8 +1,8 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, ReactNode, useState } from "react";
 import Button from "./Button";
 
 interface Props extends PropsWithChildren {
-  summary: string;
+  summary: string | ReactNode;
 }
 const Dropdown = ({ summary, children }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
