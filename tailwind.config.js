@@ -9,6 +9,10 @@ export default {
       aspectRatio: {
         book: "1 / 1.5",
       },
+      padding: {
+        theme: "3rem",
+        responsive: "1.25rem",
+      },
     },
   },
   plugins: [],

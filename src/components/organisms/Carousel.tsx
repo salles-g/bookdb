@@ -22,7 +22,7 @@ const Carousel = ({ list }: Props) => {
         </Link>
       </h2>
       <div className="relative">
-        <div className="carousel-buttons flex gap-4 w-full">
+        <div className="carousel-buttons hidden gap-4 w-full lg:flex">
           <Arrow carouselRef={carouselRef} direction="left" />
           <Arrow carouselRef={carouselRef} direction="right" />
         </div>
@@ -30,17 +30,41 @@ const Carousel = ({ list }: Props) => {
           ref={carouselRef}
           className={clsx(
             "overflow-x-scroll no-scrollbar",
-            "px-responsive lg:px-theme",
             // gives breathing room for cards that scale up on hover, without scaling the container
-            "py-4 my-[-1rem] scroll-smooth"
+            "px-2 py-2 scroll-smooth"
           )}
           data-name="scrollable"
         >
           <div className="flex w-full gap-1 lg:gap-4 h-fit overflow-visible">
             {list.reads.map((read, i) => {
-              if (i > 10) return;
+              if (i > 7) return;
               return (
-                <Image key={i} src={read.cover} className="w-40 aspect-book" />
+                <Link
+                  key={i}
+                  to={`/reads/${read.id}`}
+                  className={clsx(
+                    "w-landscape relative shrink-0 grow",
+                    "flex flex-col justify-center hover:scale-105 transition-all duration-150"
+                  )}
+                >
+                  <div
+                    className={clsx(
+                      "w-full h-auto aspect-book relative",
+                      "overflow-clip rounded-md"
+                    )}
+                  >
+                    <Image
+                      key={i}
+                      src={read.cover}
+                      className="w-40 h-auto aspect-book"
+                    />
+                  </div>
+                  <div className="flex flex-col mt-2">
+                    <p className="line-clamp-1 text-textPrimary overflow-hidden max-w-40">
+                      {read.title}
+                    </p>
+                  </div>
+                </Link>
               );
             })}
             <div className="flex items-center justify-center min-w-40 w-40 aspect-book">
