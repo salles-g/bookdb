@@ -1,0 +1,3 @@
+[ ] Não exibir novamente
+[ ] Guardar no Google Drive (ref.: Todoist)
+[ ] ? Data adapters (modelo único com todas as informações)

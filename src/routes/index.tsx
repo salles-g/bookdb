@@ -1,10 +1,9 @@
-import ReadGrid from "../components/organisms/ReadGrid";
+import ListCarousels from "../components/organisms/ListCarousels";
 
 export default function Index() {
   return (
     <p id="zero-state">
-      <h4 className="text-3xl font-bold mb-8 font-sans">Minhas leituras:</h4>
-      <ReadGrid />
+      <ListCarousels />
     </p>
   );
 }

@@ -6,6 +6,7 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
+import "./base.css";
 import "./index.css";
 import Root, {
   loader as rootLoader,
@@ -21,6 +22,8 @@ import { action as destroyAction } from "./routes/destroy";
 import Index from "./routes/index";
 import ReadsProvider from "./context/ReadsProvider";
 import ConnectionProvider from "./context/ConnectionProvider";
+import List from "./routes/list";
+import EditListProvider from "./context/EditListProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
@@ -39,6 +42,15 @@ const router = createBrowserRouter(
     >
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} loader={rootLoader} />
+        <Route
+          path="lists/:listId"
+          element={
+            <EditListProvider>
+              <List />
+            </EditListProvider>
+          }
+          loader={rootLoader}
+        />
         <Route
           path="reads/:readId"
           element={<Read />}

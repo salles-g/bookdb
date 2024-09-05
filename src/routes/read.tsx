@@ -5,7 +5,9 @@ import {
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
-import { getRead, updateRead } from "../reads";
+import { getLists, getRead, updateRead } from "../reads";
+import Image from "../components/atoms/Image";
+import Button from "../components/atoms/Button";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -15,13 +17,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 export async function loader({ params }: LoaderFunctionArgs) {
   const read = await getRead(params.readId!);
+  const lists = await getLists();
   if (!read) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
     });
   }
-  return { read };
+  return { read, lists };
 }
 
 export default function Read() {
@@ -31,7 +34,7 @@ export default function Read() {
     <div id="read" className="gap-8">
       <div>
         <div className="block w-52 h-auto aspect-book rounded-lg shadow-lg">
-          <img
+          <Image
             className="h-full w-full"
             key={read.cover}
             src={
@@ -53,7 +56,7 @@ export default function Read() {
 
         <div>
           <Form action="edit">
-            <button type="submit">Edit</button>
+            <Button type="submit">Edit</Button>
           </Form>
           <Form
             method="post"
@@ -64,7 +67,7 @@ export default function Read() {
               }
             }}
           >
-            <button type="submit">Delete</button>
+            <Button type="submit">Delete</Button>
           </Form>
         </div>
       </div>

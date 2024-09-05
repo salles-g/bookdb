@@ -23,7 +23,7 @@ const ReadListItem = ({ item, dragHandleProps }) => {
       }}
     >
       <NavLink
-        to={`reads/${item.id}`}
+        to={`/reads/${item.id}`}
         className={({ isActive, isPending }) =>
           isActive ? "active" : isPending ? "pending" : ""
         }
