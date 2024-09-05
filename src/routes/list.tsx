@@ -8,7 +8,7 @@ export default function List() {
 
   return (
     <p id="zero-state">
-      <ListGrid list={lists.find((x) => x.id === listId)!} editable />
+      <ListGrid list={lists.find((x) => x.id === listId)!} />
     </p>
   );
 }
